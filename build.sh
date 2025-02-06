@@ -16,12 +16,12 @@ npm run build
 
 # Step 2: Build Docker Image
 echo "Building Docker Image..."
-docker build -t $DOCKER_IMAGE:latest .
+docker build -t sanmathisedhupathi/test .
 
 # Step 3: Push Docker Image to Docker Hub
 echo "Pushing Docker Image to Docker Hub..."
-docker login -u "$DOCKER_HUB_USER" -p "$DOCKER_PASSWORD"
-docker push $DOCKER_IMAGE:latest
+docker login -u sanmathisedhupathi -p 08-Sep-2004
+docker push sanmathisedhupathi/test
 
 # Check if kubectl is installed, if not, install it
 if ! command -v kubectl &> /dev/null
