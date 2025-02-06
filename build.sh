@@ -19,7 +19,7 @@ docker build -t $DOCKER_IMAGE:latest .
 
 # Step 3: Push Docker Image to Docker Hub
 echo "Pushing Docker Image to Docker Hub..."
-docker login -u "$DOCKER_HUB_USER"
+docker login -u "$DOCKER_HUB_USER" -p 08-Sep-2004
 docker push $DOCKER_IMAGE:latest
 
 apt-get install -y kubectl
