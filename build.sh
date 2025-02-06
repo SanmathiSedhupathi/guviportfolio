@@ -20,23 +20,12 @@ docker build -t portfolio .
 docker images
 # Step 3: Push Docker Image to Docker Hub
 echo "Pushing Docker Image to Docker Hub..."
-docker login -u sanmathisedhupathi -p 08-Sep-2004
+docker login -u sanmathisedhupathi -p dckr_pat_l2TyXcYQcRWefKTrn_zg0AwISnM
 docker tag portfolio sanmathisedhupathi/myportfolio:latest
 docker push sanmathisedhupathi/myportfolio:latest
 
 # Check if kubectl is installed, if not, install it
-if ! command -v kubectl &> /dev/null
-then
-    echo "kubectl not found, installing..."
-    sudo apt-get update
-    sudo apt-get install -y apt-transport-https ca-certificates curl
-    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-    sudo apt-add-repository "deb https://apt.kubernetes.io/ kubernetes-xenial main"
-    sudo apt-get update
-    sudo apt-get install -y kubectl
-else
-    echo "kubectl is already installed"
-fi
+
 minikube start
 
 # Step 5: Deploy new version on Kubernetes using YAML deployment file
