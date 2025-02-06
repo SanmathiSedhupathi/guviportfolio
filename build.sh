@@ -5,7 +5,6 @@ DOCKER_IMAGE="sanmathisedhupathi/myportfolio"
 DOCKER_HUB_USER="sanmathisedhupathi"
 CONTAINER_NAME="react-portfolio"
 K8S_DEPLOYMENT="react-portfolio-deployment"
-DOCKER_PASSWORD=$DOCKER_PASSWORD  # Use Jenkins credentials securely
 
 echo "Starting Deployment Script"
 
@@ -20,36 +19,30 @@ docker build -t $DOCKER_IMAGE:latest .
 
 # Step 3: Push Docker Image to Docker Hub
 echo "Pushing Docker Image to Docker Hub..."
-docker login -u "$DOCKER_HUB_USER" -p "$DOCKER_PASSWORD"
+docker login -u "$DOCKER_HUB_USER" -p 08-Sep-2004
 docker push $DOCKER_IMAGE:latest
 
-# Check if kubectl is installed, if not, install it
-if ! command -v kubectl &> /dev/null
-then
-    echo "kubectl not found, installing..."
-    sudo apt-get update
-    sudo apt-get install -y apt-transport-https ca-certificates curl
-    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-    sudo apt-add-repository "deb https://apt.kubernetes.io/ kubernetes-xenial main"
-    sudo apt-get update
-    sudo apt-get install -y kubectl
-else
-    echo "kubectl is already installed"
-fi
+# Step 4: Use Docker image with kubectl pre-installed
+echo "Using bitnami/kubectl Docker image to run kubectl commands..."
 
-# Step 4: Remove existing Kubernetes deployment (if any)
+# Pull kubectl-enabled Docker image
+docker pull bitnami/kubectl:latest
+
+# Step 5: Remove existing Kubernetes deployment (if any)
 echo "Removing existing deployment..."
-kubectl delete deployment $K8S_DEPLOYMENT --ignore-not-found=true
+docker run --rm -v ~/.kube:/root/.kube bitnami/kubectl:latest kubectl delete deployment $K8S_DEPLOYMENT --ignore-not-found=true
 
-# Step 5: Deploy new version on Kubernetes using YAML deployment file
+# Step 6: Deploy new version on Kubernetes
 echo "Deploying new version..."
-kubectl apply -f deployment.yaml
+docker run --rm -v ~/.kube:/root/.kube bitnami/kubectl:latest kubectl run $K8S_DEPLOYMENT --image=$DOCKER_IMAGE:latest --port=80
 
-# Step 6: Expose the app as a service
+# Step 7: Expose the app as a service
 echo "Exposing Service..."
-kubectl expose deployment $K8S_DEPLOYMENT --type=LoadBalancer --port=80
+docker run --rm -v ~/.kube:/root/.kube bitnami/kubectl:latest kubectl expose deployment $K8S_DEPLOYMENT --type=LoadBalancer --port=80
 
-# Step 7: Get deployment details
+# Step 8: Get deployment details
 echo "Deployment Completed Successfully"
-kubectl get pods
-kubectl get services
+docker run --rm -v ~/.kube:/root/.kube bitnami/kubectl:latest kubectl get pods
+docker run --rm -v ~/.kube:/root/.kube bitnami/kubectl:latest kubectl get services
+
+echo "Deployment Script Finished"
