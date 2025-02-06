@@ -27,8 +27,12 @@ docker push $DOCKER_IMAGE:latest
 if ! command -v kubectl &> /dev/null
 then
     echo "kubectl not found, installing..."
-    apt-get update
-    apt-get install -y kubectl
+    sudo apt-get update
+    sudo apt-get install -y apt-transport-https ca-certificates curl
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+    sudo apt-add-repository "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    sudo apt-get update
+    sudo apt-get install -y kubectl
 else
     echo "kubectl is already installed"
 fi
