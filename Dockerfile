@@ -15,6 +15,7 @@
 
 # Stage 1: Build React App
 FROM node:18 AS build
+RUN apt-get update && apt-get install -y npm
 
 # Set working directory inside the container
 WORKDIR /app
