@@ -5,6 +5,7 @@ DOCKER_IMAGE="sanmathisedhupathi/myportfolio"
 DOCKER_HUB_USER="sanmathisedhupathi"
 CONTAINER_NAME="react-portfolio"
 K8S_DEPLOYMENT="react-portfolio-deployment"
+DOCKER_PASSWORD=$DOCKER_PASSWORD  # Use Jenkins credentials securely
 
 echo "Starting Deployment Script"
 
@@ -19,19 +20,26 @@ docker build -t $DOCKER_IMAGE:latest .
 
 # Step 3: Push Docker Image to Docker Hub
 echo "Pushing Docker Image to Docker Hub..."
-docker login -u "$DOCKER_HUB_USER" -p 08-Sep-2004
+docker login -u "$DOCKER_HUB_USER" -p "$DOCKER_PASSWORD"
 docker push $DOCKER_IMAGE:latest
 
-apt-get install -y kubectl
-
+# Check if kubectl is installed, if not, install it
+if ! command -v kubectl &> /dev/null
+then
+    echo "kubectl not found, installing..."
+    apt-get update
+    apt-get install -y kubectl
+else
+    echo "kubectl is already installed"
+fi
 
 # Step 4: Remove existing Kubernetes deployment (if any)
 echo "Removing existing deployment..."
 kubectl delete deployment $K8S_DEPLOYMENT --ignore-not-found=true
 
-# Step 5: Deploy new version on Kubernetes
+# Step 5: Deploy new version on Kubernetes using YAML deployment file
 echo "Deploying new version..."
-kubectl run $K8S_DEPLOYMENT --image=$DOCKER_IMAGE:latest --port=80
+kubectl apply -f deployment.yaml
 
 # Step 6: Expose the app as a service
 echo "Exposing Service..."
