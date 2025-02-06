@@ -16,7 +16,7 @@ npm run build
 
 # Step 2: Build Docker Image
 echo "Building Docker Image..."
-docker build -t sanmathisedhupathi/myportfolio:latest ..
+docker build -t sanmathisedhupathi/myportfolio:latest .
 
 # Step 3: Push Docker Image to Docker Hub
 echo "Pushing Docker Image to Docker Hub..."
