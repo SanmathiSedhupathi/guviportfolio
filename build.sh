@@ -37,7 +37,7 @@ then
 else
     echo "kubectl is already installed"
 fi
-
+minikube start
 
 # Step 5: Deploy new version on Kubernetes using YAML deployment file
 # echo "Deploying new version..."
