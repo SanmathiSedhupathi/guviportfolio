@@ -5,7 +5,7 @@ DOCKER_IMAGE="sanmathisedhupathi/myportfolio"
 DOCKER_HUB_USER="sanmathisedhupathi"
 CONTAINER_NAME="react-portfolio"
 K8S_DEPLOYMENT="react-portfolio-deployment"
-DOCKER_PASSWORD=08-Sep-2004  # Use Jenkins credentials securely
+DOCKER_PASSWORD="08-Sep-2004"  # Use Jenkins credentials securely
 
 echo "Starting Deployment Script"
 
