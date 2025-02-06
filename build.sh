@@ -16,6 +16,8 @@ apt update
 apt install -y curl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+# Check Kubernetes Pods
+docker run --rm -v ~/.kube:/root/.kube bitnami/kubectl:latest kubectl get pods
 
 # Step 2: Build React App
 echo "Building React Application..."
