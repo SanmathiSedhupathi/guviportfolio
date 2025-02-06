@@ -23,6 +23,7 @@ docker login -u "$DOCKER_HUB_USER" -p 08-Sep-2004
 docker push $DOCKER_IMAGE:latest
 
 apt-get install -y kubectl
+chmod 777 /var/lib/dpkg/lock-frontend
 
 # Step 4: Remove existing Kubernetes deployment (if any)
 echo "Removing existing deployment..."
