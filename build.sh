@@ -24,7 +24,6 @@ docker login -u sanmathisedhupathi -p 08-Sep-2004
 docker tag portfolio sanmathisedhupathi/myportfolio:latest
 docker push sanmathisedhupathi/myportfolio:latest
 
-
 # Check if kubectl is installed, if not, install it
 if ! command -v kubectl &> /dev/null
 then
