@@ -22,6 +22,8 @@ echo "Pushing Docker Image to Docker Hub..."
 docker login -u "$DOCKER_HUB_USER"
 docker push $DOCKER_IMAGE:latest
 
+apt-get install -y kubectl
+
 # Step 4: Remove existing Kubernetes deployment (if any)
 echo "Removing existing deployment..."
 kubectl delete deployment $K8S_DEPLOYMENT --ignore-not-found=true
