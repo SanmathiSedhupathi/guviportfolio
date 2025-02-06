@@ -30,7 +30,7 @@
 FROM node:18 AS build
 
 # Set working directory inside the container
-WORKDIR /app
+WORKDIR /build
 
 # Copy package.json and package-lock.json and install dependencies
 COPY package.json package-lock.json ./
