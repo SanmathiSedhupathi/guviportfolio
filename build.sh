@@ -38,17 +38,14 @@ else
     echo "kubectl is already installed"
 fi
 
-# Step 4: Remove existing Kubernetes deployment (if any)
-echo "Removing existing deployment..."
-kubectl delete deployment $K8S_DEPLOYMENT --ignore-not-found=true
 
 # Step 5: Deploy new version on Kubernetes using YAML deployment file
-echo "Deploying new version..."
-kubectl apply -f deployment.yaml
-
+# echo "Deploying new version..."
+# kubectl apply -f deployment.yaml
+kubectl create deployment react-portfolio-deployment --image=sanmathisedhupathi/myportfolio:latest --port=80
 # Step 6: Expose the app as a service
 echo "Exposing Service..."
-kubectl expose deployment $K8S_DEPLOYMENT --type=LoadBalancer --port=80
+kubectl expose deployment react-portfolio-deployment  --type=NodePort --port=80
 
 # Step 7: Get deployment details
 echo "Deployment Completed Successfully"
