@@ -21,8 +21,8 @@ docker images
 # Step 3: Push Docker Image to Docker Hub
 echo "Pushing Docker Image to Docker Hub..."
 docker login -u sanmathisedhupathi -p dckr_pat_l2TyXcYQcRWefKTrn_zg0AwISnM
-docker tag portfolio sanmathisedhupathi/myportfolio:latest
-docker push sanmathisedhupathi/myportfolio:latest
+docker tag portfolio sanmathisedhupathi/myportfolio
+docker push sanmathisedhupathi/myportfolio
 
 # Check if kubectl is installed, if not, install it
 
