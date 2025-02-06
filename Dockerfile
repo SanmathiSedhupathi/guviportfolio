@@ -20,7 +20,7 @@ RUN npm install web-vitals --save
 
 # Set working directory inside the container
 WORKDIR /app
-
+RUN npm install
 # Copy package.json and install dependencies
 COPY package.json package-lock.json ./
 RUN npm install
