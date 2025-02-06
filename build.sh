@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-DOCKER_IMAGE="sanmathisedhupathi/myportfolio"
+DOCKER_IMAGE="portfolio"
 DOCKER_HUB_USER="sanmathisedhupathi"
 CONTAINER_NAME="react-portfolio"
 K8S_DEPLOYMENT="react-portfolio-deployment"
@@ -16,12 +16,12 @@ npm run build
 
 # Step 2: Build Docker Image
 echo "Building Docker Image..."
-docker build -t sanmathisedhupathi/myportfolio:latest .
-
+docker build -t portfolio .
+docker images
 # Step 3: Push Docker Image to Docker Hub
 echo "Pushing Docker Image to Docker Hub..."
 docker login -u sanmathisedhupathi -p 08-Sep-2004
-
+docker tag portfolio sanmathisedhupathi/myportfolio:latest
 docker push sanmathisedhupathi/myportfolio:latest
 
 
